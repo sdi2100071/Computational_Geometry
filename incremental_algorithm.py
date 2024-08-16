@@ -37,33 +37,23 @@ def grahams_incremental_algorithm(points):
     L_upper = [sorted_points[0], sorted_points[1]]
     
     for point in sorted_points[2:]:
-        
         while len(L_upper) >= 2  and orientation(L_upper[-2], L_upper[-1], point) != 2:
             L_upper.pop(-1)
         L_upper.append(point)
     
+    # Initialise L lower
     L_lower = [sorted_points[-1], sorted_points[-2]]
     for point in sorted_points[-3::-1]:
         
         while len(L_lower) >= 2  and orientation(L_lower[-2], L_lower[-1], point) != 2:
             L_lower.pop(-1)
         L_lower.append(point)
-
+    #pop first and last element to avoid duplicates
     L_lower.pop(0)
     L_lower.pop()
- 
- 
+    
+    # merge
     L = L_upper + L_lower
     
     return L
         
-    
-# if __name__ == "__main__":
-
-#     points = [(random.randint(0, 100), random.randint(0, 100)) for _ in range(120)]
-#     # sorted_points = sort_to_x(points)
-    
-#     grahams_incremental_algorithm(points)
-    
-    
-    
