@@ -11,7 +11,8 @@ def sort_to_x(points):
     sorted_points = sorted(points, key=lambda k: [k[0], k[1]])
     return sorted_points    
 
-# Calculates the orientation of three points got this function from:
+# Calculates the orientation of three points 
+# got this function from:
 # https://www.geeksforgeeks.org/orientation-3-ordered-points/
 def orientation(p, q, r):
     """Calculates the orientation of three points 

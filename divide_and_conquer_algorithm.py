@@ -75,9 +75,9 @@ def divide_and_conquer(points):
     
     if len(points) <= 3:
         # Ταξινόμηση και αφαίρεση συνευθειακών σημείων
-        points = sorted(points, key=lambda p: (p[0], p[1]))
-        if len(points) == 3 and orientation(points[0], points[1], points[2]) == 0:
-            points.pop(1)
+        # points = sorted(points, key=lambda p: (p[0], p[1]))
+        # if len(points) == 3 and orientation(points[0], points[1], points[2]) == 0:
+        #     points.pop(1)
         return points
 
     mid = len(points) // 2
@@ -86,21 +86,21 @@ def divide_and_conquer(points):
 
     return merge_hulls(left_hull, right_hull)
 
-# Παράδειγμα χρήσης:
-if __name__ == "__main__":
-    # Δημιουργία τυχαίων σημείων
-    points = [(random.randint(0, 100), random.randint(0, 100)) for _ in range(20)]
+# # Παράδειγμα χρήσης:
+# if __name__ == "__main__":
+#     # Δημιουργία τυχαίων σημείων
+#     points = [(random.randint(0, 100), random.randint(0, 100)) for _ in range(20)]
     
-    # Ταξινόμηση των σημείων με βάση την x-συντεταγμένη
-    points = sorted(points, key=lambda p: p[0])
+#     # Ταξινόμηση των σημείων με βάση την x-συντεταγμένη
+#     points = sorted(points, key=lambda p: p[0])
 
-    # Εύρεση του κυρτού περιβλήματος χρησιμοποιώντας τον αλγόριθμο "Διαίρει και Βασίλευε"
-    hull = divide_and_conquer(points)
+#     # Εύρεση του κυρτού περιβλήματος χρησιμοποιώντας τον αλγόριθμο "Διαίρει και Βασίλευε"
+#     hull = divide_and_conquer(points)
     
-    # Σχεδίαση των σημείων και του κυρτού περιβλήματος
-    plt.figure(figsize=(8, 8))
-    plt.scatter(*zip(*points), label="Σημεία")
-    hull.append(hull[0])  # Κλείσιμο του κυρτού περιβλήματος
-    plt.plot(*zip(*hull), 'r-', label="Κυρτό Περίβλημα")
-    plt.legend()
-    plt.show()
+#     # Σχεδίαση των σημείων και του κυρτού περιβλήματος
+#     plt.figure(figsize=(8, 8))
+#     plt.scatter(*zip(*points), label="Σημεία")
+#     hull.append(hull[0])  # Κλείσιμο του κυρτού περιβλήματος
+#     plt.plot(*zip(*hull), 'r-', label="Κυρτό Περίβλημα")
+#     plt.legend()
+#     plt.show()
