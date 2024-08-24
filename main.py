@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import random
 import sys 
 from algorithms import Algorithms as algo
+import time
 
 def sort_to_x(points):
    
@@ -48,6 +49,35 @@ def generate_generic_points(num_points, x_range=(0, 100), y_range=(0, 100)):
     
     return points
 
+
+# not complete
+
+def benchmark_convex_hull_algorithms(algo):
+    """Benchmark convex hull algorithms with increasing number of points."""
+    num_points_list = [10, 50, 100, 500, 1000, 5000, 10000]
+    algorithms = {'Graham Scan': algo.graham_scan, 'QuickHull': quickhull, 'Divide and Conquer': divide_and_conquer}
+    results = {name: [] for name in algorithms}
+
+    for num_points in num_points_list:
+        points = generate_generic_points(num_points)
+        print(f"\nTesting with {num_points} points:")
+        for name, algorithm in algorithms.items():
+            start_time = time.time()
+            hull = algorithm(points)
+            elapsed_time = time.time() - start_time
+            results[name].append(elapsed_time)
+            print(f"{name}: {elapsed_time:.6f} seconds")
+
+    # Plotting the results
+    plt.figure(figsize=(10, 6))
+    for name, times in results.items():
+        plt.plot(num_points_list, times, label=name)
+    plt.xlabel('Number of Points')
+    plt.ylabel('Time (seconds)')
+    plt.title('Convex Hull Algorithms Performance')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
 
 
 if __name__ == "__main__":
