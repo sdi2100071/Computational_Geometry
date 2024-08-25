@@ -1,14 +1,14 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import math
-import random
 
-class Algorithms:
+
+class Convex_Hull:
     
     '''
    
-    Algorithms project with the implementations of 
-    the various algorithms for calculating the convex hull (2D)
+    Contains the the implementations of the various algorithms for
+    calculating the convex hull (2D) along with the needed additional
+    functions
    
     '''
     
@@ -22,12 +22,17 @@ class Algorithms:
         self.points = sorted(points, key = lambda x: x[0]) 
     
     
-    def plot(points, convex_hull):
+    def plot(points, convex_hull, algorithm_name):
+       
+        '''
+        Creates a plot for a fiven convex hull and the points 
+        '''
         
         plt.figure()
         plt.scatter(*zip(*points), label="Points")
         convex_hull.append(convex_hull[0]) 
         plt.plot(*zip(*convex_hull), 'r-', label="Convex_Hull")
+        plt.title(algorithm_name)
         plt.legend()
         plt.show()
     
@@ -52,6 +57,9 @@ class Algorithms:
         
         
     def distance(p1, p2):
+        '''
+        Calculates Eucledean Distance between two given points
+        '''
         return (p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2
     
                 
@@ -105,18 +113,16 @@ class Algorithms:
             r = u
             
         return L
+    
+    
     def merge_hulls(left_hull, right_hull, self):
-        """Συνδυάζει τα δύο κυρτά περιβλήματα σε ένα."""
         
         n1, n2 = len(left_hull), len(right_hull)
         
-        # Βρείτε το δεξιότερο σημείο του αριστερού περιβλήματος
         i = max(range(n1), key=lambda x: left_hull[x][0])
         
-        # Βρείτε το αριστερότερο σημείο του δεξιού περιβλήματος
         j = min(range(n2), key=lambda x: right_hull[x][0])
 
-        # Βρείτε την άνω συνένωση
         upper_i, upper_j = i, j
         while True:
             moved = False
@@ -129,7 +135,6 @@ class Algorithms:
             if not moved:
                 break
 
-        # Βρείτε την κάτω συνένωση
         lower_i, lower_j = i, j
         while True:
             moved = False
@@ -142,7 +147,6 @@ class Algorithms:
             if not moved:
                 break
 
-        # Συνδυασμός των δύο περιβλημάτων
         merged_hull = []
 
         index = upper_i
@@ -160,13 +164,8 @@ class Algorithms:
         return merged_hull
 
     def divide_and_conquer(points, self):
-        """Διαίρει και βασίλευε για εύρεση κυρτού περιβλήματος."""
         
         if len(points) <= 3:
-            # Ταξινόμηση και αφαίρεση συνευθειακών σημείων
-            # points = sorted(points, key=lambda p: (p[0], p[1]))
-            # if len(points) == 3 and orientation(points[0], points[1], points[2]) == 0:
-            #     points.pop(1)
             return points
 
         mid = len(points) // 2
@@ -194,37 +193,30 @@ class Algorithms:
         min_y_point = min(points, key=lambda p: p[1])
         max_y_point = max(points, key=lambda p: p[1])
 
-        # Initial set of points to ignore those inside the quadrilateral
         initial_hull = [min_x_point, max_x_point, min_y_point, max_y_point]
 
-        # Remove initial hull points from points set
         remaining_points = [p for p in points if p not in initial_hull]
 
-        # Separate points into four regions
         region_1 = [p for p in remaining_points if self.is_point_right_of_line(p, min_x_point, max_y_point)]
         region_2 = [p for p in remaining_points if self.is_point_right_of_line(p, max_y_point, max_x_point)]
         region_3 = [p for p in remaining_points if self.is_point_right_of_line(p, max_x_point, min_y_point)]
         region_4 = [p for p in remaining_points if self.is_point_right_of_line(p, min_y_point, min_x_point)]
 
-        # Apply QuickHull recursively on each region
         upper_hull = self.quickhull_rec(region_1, min_x_point, max_y_point, self) + self.quickhull_rec(region_2, max_y_point, max_x_point, self)
         lower_hull = self.quickhull_rec(region_3, max_x_point, min_y_point, self) + self.quickhull_rec(region_4, min_y_point, min_x_point, self)
 
         return upper_hull + lower_hull
 
     def quickhull_rec(points, line_start, line_end, self):
-        """Recursive function for QuickHull algorithm."""
+       
         if not points:
             return [line_start]
 
-        # Find point C with the maximum distance from line segment AB
         point_C = max(points, key=lambda p: self.distance_from_line(p, line_start, line_end))
 
-        # Points to the right of AC and CB
         M = [point for point in points if self.is_point_right_of_line(point, line_start, point_C)]
         N = [point for point in points if self.is_point_right_of_line(point, point_C, line_end)]
 
-        # Recursive search on both segments
         return self.quickhull_rec(M, line_start, point_C, self) + self.quickhull_rec(N, point_C, line_end, self)
 
 
