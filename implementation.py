@@ -1,10 +1,10 @@
 import matplotlib.pyplot as plt
 import random
 import collections
-import sys 
 from convex_hull import Convex_Hull as algo
 import time
 from tabulate import tabulate
+import sys 
 
 
 def sort_to_x(points):
@@ -49,6 +49,7 @@ def generate_generic_points(num_points, x_range=(0, 100), y_range=(0, 100)):
 
 if __name__ == "__main__":
 
+#1
     # Generate set of random points in generic position
     points = generate_generic_points(120)     
     # points = [(random.randint(0, 100), random.randint(0, 100)) for _ in range(500)]
@@ -110,9 +111,13 @@ if __name__ == "__main__":
         
     print(tabulate(duration_dict, headers="keys", tablefmt="fancy_grid"))
 
-    #2.1
+#2
 
-    
+
+
+
+
+
             
                     
         
