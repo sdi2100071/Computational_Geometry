@@ -24,6 +24,8 @@ def are_collinear(p1, p2, p3):
     return (p3[1] - p2[1]) * (p2[0] - p1[0]) == (p2[1] - p1[1]) * (p3[0] - p2[0])
 
 
+
+
 def generate_generic_points(num_points, x_range=(0, 100), y_range=(0, 100)):
    
     """Generates points in generic position"""
@@ -112,6 +114,8 @@ if __name__ == "__main__":
     print(tabulate(duration_dict, headers="keys", tablefmt="fancy_grid"))
 
 #2
+
+
 
 
 
